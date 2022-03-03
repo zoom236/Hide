@@ -11,6 +11,7 @@ public class ActionController : MonoBehaviour
     public bool pickupActivated = false;  // 아이템 습득 가능할시 True 
 
     public RaycastHit hitInfo;  // 충돌체 정보 저장
+    public Inventory inven;
 
     //[SerializeField]
     //private LayerMask layerMask;  // 특정 레이어를 가진 오브젝트에 대해서만 습득할 수 있어야 한다.
@@ -23,8 +24,10 @@ public class ActionController : MonoBehaviour
     void Update()
     {
         //CheckItem();
-        TryAction();
-        book = GameObject.FindGameObjectWithTag("Item");
+
+
+        //TryAction();
+        //book = GameObject.FindGameObjectWithTag("Item");
     }
 
     public void TryAction()
@@ -42,13 +45,13 @@ public class ActionController : MonoBehaviour
         //Debug.DrawRay(transform.position, transform.forward * range, Color.blue);
         //if (Physics.Raycast(transform.position, transform.forward, out hitInfo, range, layerMask))
 
-            /*Debug.Log("아이템 확인");
-            if (hitInfo.transform.tag == "Item")
-            {
-                ItemInfoAppear();
-            }
-            else
-                ItemInfoDisappear();*/
+        /*Debug.Log("아이템 확인");
+        if (hitInfo.transform.tag == "Item")
+        {
+            ItemInfoAppear();
+        }
+        else
+            ItemInfoDisappear();*/
     }
 
     public void ItemInfoAppear()
@@ -62,6 +65,7 @@ public class ActionController : MonoBehaviour
 
     public void ItemInfoDisappear()
     {
+        Debug.Log("pickupActivated 꺼졌지롱!");
         pickupActivated = false;
         actionText.gameObject.SetActive(false);
     }
@@ -71,9 +75,10 @@ public class ActionController : MonoBehaviour
         Debug.Log("E키 누름");
         if (pickupActivated)
         {
-                Debug.Log("아이템 획득");  // 인벤토리 넣기
-                Destroy(GameObject.FindGameObjectWithTag("Item"));
-                ItemInfoDisappear();
+            Debug.Log("아이템 획득");  // 인벤토리 넣기
+
+            Destroy(GameObject.FindGameObjectWithTag("Item"));
+            ItemInfoDisappear();
         }
     }
 

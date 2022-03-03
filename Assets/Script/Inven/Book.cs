@@ -10,18 +10,15 @@ public class Book : MonoBehaviour
     public GameObject script_1;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        script_1.GetComponent<ActionController>().ItemInfoDisappear();
-        //actioncontroller = GameObject.Find("Character").GetComponent<ActionController>
-    }
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    //player = GameObject.FindGameObjectWithTag("Player");
+    //    //script_1.GetComponent<ActionController>().ItemInfoDisappear();
+    //    //actioncontroller = GameObject.Find("Character").GetComponent<ActionController>
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,5 +29,15 @@ public class Book : MonoBehaviour
             //actioncontroller.ItemInfoAppear();
         }
         //actioncontroller.ItemInfoDisappear();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("æ∆¿Ã≈€ æ∆øÙ!");
+            script_1.GetComponent<ActionController>().ItemInfoDisappear();
+            //actioncontroller.ItemInfoAppear();
+        }
     }
 }
