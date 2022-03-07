@@ -7,7 +7,7 @@ public class MoveTowards : MonoBehaviour
     /* 시점 방향으로 이동하는 스크립트입니다. */
 
     public Camera cam; //메인카메라
-    private float speed = 0.5f; // 이동속도
+    private float Speed = 0.5f; // 이동속도
 
     void Start()
     {

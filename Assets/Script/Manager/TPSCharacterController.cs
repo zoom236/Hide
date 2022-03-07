@@ -11,7 +11,7 @@ public class TPSCharacterController : MonoBehaviour
 
     Animator animator;
 
-    private int toggleView = 3; // 1=1ÀÎÄª, 3=3ÀÎÄª
+    private int ToggleView = 3; // 1=1ÀÎÄª, 3=3ÀÎÄª
 
     // Start is called before the first frame update
     void Start()
