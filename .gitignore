@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Assets/Kor_Item/textures/SRC_001_Normal.png
+Assets/Kor_Item/textures/SRC_001_Diffuse.png
+Assets/Kor_Item/textures/SRC_001-1_Normal.png
+Assets/Kor_Item/textures/SRC_001-1_Diffuse.png
