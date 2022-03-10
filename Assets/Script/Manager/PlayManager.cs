@@ -11,7 +11,7 @@ public class PlayManager : MonoBehaviour
     GameStart GS;
 
     delegate int Calculator<T>(T start, T end);
-    Calculator<int> PERCENT, PICK, SELECT;
+    Calculator<int> PERCENT, PICK, SELECT; 
 
     static class YieldCash
     {
