@@ -10,10 +10,8 @@ public class PlayManager : MonoBehaviour
     delegate void GameStart();
     GameStart GS;
 
-    //delegate int 
-
-
-
+    delegate int Calculator<T>(T start, T end);
+    Calculator<int> PERCENT, PICK, SELECT;
 
     static class YieldCash
     {
