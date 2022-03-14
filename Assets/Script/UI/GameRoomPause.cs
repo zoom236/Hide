@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameRoomPause : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameRoomPause : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused)
@@ -46,5 +48,12 @@ public class GameRoomPause : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+
+
+
+ 
+
+
 
 }
