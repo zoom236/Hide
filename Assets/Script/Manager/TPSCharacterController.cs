@@ -24,6 +24,7 @@ public class TPSCharacterController : MonoBehaviour
     {
         LookAround();
         Move();
+
     }
 
     private void Move()
@@ -61,6 +62,8 @@ public class TPSCharacterController : MonoBehaviour
         }
 
         cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
+
+
 
     }
 }
