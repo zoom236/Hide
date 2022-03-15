@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInput();
-        Move();
+        //Move();
         Trun();
         Jump();
         Sit();
@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
 
     void GetInput()
     {
-        hAxis = Input.GetAxisRaw("Horizontal");
-        vAxis = Input.GetAxisRaw("Vertical");
+        //hAxis = Input.GetAxisRaw("Horizontal");
+        //vAxis = Input.GetAxisRaw("Vertical");
         jDown = Input.GetButtonDown("Jump");
         sDown = Input.GetKeyDown(KeyCode.LeftControl);
 
@@ -56,13 +56,13 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void Move()
-    {
-        moveVec = new Vector3(hAxis, 0, vAxis).normalized;
-        transform.position += moveVec * speed * Time.deltaTime;
+    //void Move()
+    //{
+    //    moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+    //    transform.position += moveVec * speed * Time.deltaTime;
 
-        anim.SetBool("isRun", moveVec != Vector3.zero);
-    }
+    //    anim.SetBool("isRun", moveVec != Vector3.zero);
+    //}
 
     void SitMove()
     {

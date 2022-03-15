@@ -5,32 +5,63 @@ using UnityEngine;
 public class TPSCharacterController : MonoBehaviour
 {
     [SerializeField]
-    private Transform characterBody;
+    private Transform characterBody;    // 캐릭터
     [SerializeField]
-    private Transform cameraArm;
+    private Transform cameraArm;        // 카메라 회전
 
-    Animator animator;
+    Animator anim;
+    Rigidbody rigid;
 
-    private int ToggleView = 3; // 1=1인칭, 3=3인칭
+    bool jDown;  // 점프
+    bool isJump;
 
-    // Start is called before the first frame update
-    void Start()
+    bool sDown;  // 앉기
+    bool isSit;
+
+    bool tDown;  // 일어나기
+    bool isStand;
+
+    //bool swDown;  // 앉은상태에서 걷기
+    //bool isSitWalk;
+
+    //private int ToggleView = 3; // 1=1인칭, 3=3인칭
+
+    void Awake()
     {
-        animator = characterBody.GetComponent<Animator>();
+        anim = characterBody.GetComponent<Animator>();        // characterBody.GetComponent
+        rigid = characterBody.GetComponent<Rigidbody>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        LookAround();
-        Move();
+        GetInput();     // 키 입력
+        Move();         // 플레이어 이동
+        LookAround();   // 카메라 시선 이동
+        SitMove();      // 앉아서 이동
+        Jump();         // 점프
+        Sit();          // 앉기
+        Stand();        // 일어나기
+    }
+
+    void GetInput()
+    {
+        jDown = Input.GetButtonDown("Jump");
+        sDown = Input.GetKeyDown(KeyCode.LeftControl);
+
+        if (sDown && isSit)
+        {
+            tDown = Input.GetKeyDown(KeyCode.LeftControl);
+        }
     }
 
     private void Move()
     {
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        bool isMove = moveInput.magnitude != 0;
-        animator.SetBool("isMove", isMove);
+        bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
+        anim.SetBool("isRun", isMove);
+
         if (isMove)
         {
             Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
@@ -40,14 +71,71 @@ public class TPSCharacterController : MonoBehaviour
             characterBody.forward = moveDir;
             //characterBody.forward = lookForward;
             transform.position += moveDir * Time.deltaTime * 5f;
+
+            //if (Input.GetKeyDown(KeyCode.LeftAlt))
+            //{
+            //    characterBody.forward = lookForward;
+            //}
+            //else
+            //{
+            //    characterBody.forward = moveDir;
+            //}
         }
+
 
         //Debug.DrawRay(cameraArm.position, new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized, Color.red);
     }
-
-    private void LookAround()
+    void Sit()
     {
-        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        if (sDown && !isSit)
+        {
+            anim.SetBool("isSit", true);
+            isSit = true;
+        }
+        //isSit = false;
+    }
+
+    void SitMove()
+    {
+        Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
+        anim.SetBool("isSitWalk", isMove);
+
+        if (isMove)
+        {
+            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+            Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
+
+            characterBody.forward = moveDir;
+            //characterBody.forward = lookForward;
+            transform.position += moveDir * Time.deltaTime * 0.5f;
+        }
+    }
+
+    void Stand()
+    {
+        if (tDown && isSit && !isStand)
+        {
+            anim.SetBool("isStand", true);
+            isStand = true;
+        }
+    }
+
+    void Jump()
+    {
+        if (jDown && !isJump)
+        {
+            rigid.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            //anim.SetBool("isJump", true);
+            anim.SetTrigger("doJump");
+            isJump = true;
+        }
+    }
+
+    private void LookAround()       // 카메라 회전 기능
+    {
+        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));       // mouse x = 마우스 좌우 수치, mouse y = 마우스 상하 수치 
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
         float x = camAngle.x - mouseDelta.y;
 
@@ -57,10 +145,20 @@ public class TPSCharacterController : MonoBehaviour
         }
         else
         {
-            x = Mathf.Clamp(x, 355f, 361f);
+            x = Mathf.Clamp(x, 335f, 361f);
         }
 
         cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
-
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            Debug.Log("착지");
+            //anim.SetBool("isJump", false);
+            isJump = false;
+            isSit = false;
+            isStand = false;
+        }
     }
 }

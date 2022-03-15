@@ -1,0 +1,8 @@
+Item	RedBean	붉은 팥	1	FALSE
+Item	ZipShoes	짚신	1	FALSE
+Item	Amulet	부적	1	FALSE
+Item	InvisibleGod	투명 갓	1	FALSE
+Item	StickySlime	끈끈이	1	FALSE
+Item	SmokeBomb	연막탄	1	FALSE
+Item	BeanBomb	콩알탄	1	FALSE
+Item	GasTrap	방구트랩	1	FALSE
