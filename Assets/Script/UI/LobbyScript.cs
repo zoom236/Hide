@@ -15,6 +15,17 @@ public class LobbyScript : MonoBehaviour
                 case "RoomMakeBtn":
                 SceneManager.LoadScene("GameRoom");
                 break;
+
+                        case "StoreBtn":
+                            SceneManager.LoadScene("StoreScene");
+                            break;
+
+            case "StoreExit":
+                SceneManager.LoadScene("LobbyUI");
+                break;
+                    }
+                }
         }
-    }
-}
+ 
+
+
