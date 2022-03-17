@@ -1,0 +1,14 @@
+﻿#pragma kernel Full
+
+Texture2D<float4> posTex;
+Texture2D<float4> normalTex;
+RWStructuredBuffer<float4> positions;
+RWStructuredBuffer<float4> normals;
+int buffersWidth;
+
+[numthreads(8,8,1)]
+void Full (uint3 id : SV_DispatchThreadID)
+{
+    positions[id.y * buffersWidth + id.x] = posTex[id.xy];
+    normals[id.y * buffersWidth + id.x] = normalTex[id.xy];
+}
