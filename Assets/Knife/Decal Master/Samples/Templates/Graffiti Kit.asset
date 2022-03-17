@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c643d1d6df1274c42bccb8b7be3a8bc9, type: 3}
+  m_Name: Graffiti Kit
+  m_EditorClassIdentifier: 
+  Templates:
+  - DecalMaterial: {fileID: 2100000, guid: 573cab1fcb9c55d4d940e146a452c901, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: b3d40416d84fbeb41a3da0a26860f742, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: b3d40416d84fbeb41a3da0a26860f742, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: 1ef496ba61f735d4e95463e1e075627b, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: ca876ca1a209917409857d9c6f51cff0, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: e89a628ba79bd474d9a0b1e8a9b51341, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: 5b3c94d6b9964e945b0e515a43c91ce1, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: 94966f87b0cbb9a43b9565918caa76ad, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
+  - DecalMaterial: {fileID: 2100000, guid: 489f0fe81e9d5374ba49d6aefef9322a, type: 2}
+    ResultContent:
+      m_Text: 
+      m_Image: {fileID: 0}
+      m_Tooltip: 
+    InstancedColor: {r: 1, g: 1, b: 1, a: 1}
+    InstancedUV: {x: 1, y: 1, z: 0, w: 0}
