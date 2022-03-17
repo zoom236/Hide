@@ -11,8 +11,11 @@ public class MainScript : MonoBehaviour
     public Toggle fullscreenBtn;
     public Dropdown resoultionDropdown;
     List<Resolution> resolutions = new List<Resolution>();
+    public Toggle windowscreenBtn;
+
     int resolutionNum;
 
+  
 
     public void Start()
     {
@@ -31,6 +34,7 @@ public class MainScript : MonoBehaviour
         }
 
         resolutions.AddRange(Screen.resolutions);
+
         resoultionDropdown.options.Clear();
 
         int optionNum = 0;
@@ -38,14 +42,14 @@ public class MainScript : MonoBehaviour
         foreach (Resolution item in resolutions)
         {
             Dropdown.OptionData option = new Dropdown.OptionData();
-            option.text = item.width + " x " + item.height + " " + item.refreshRate;      //옵션 해상도 표시
-            resoultionDropdown.options.Add(option);
+            option.text = item.width + " x " + item.height;      //옵션 해상도 출력
+            resoultionDropdown.options.Add(option);    //옵션 추가
 
 
-            if (item.width == Screen.width && item.height == Screen.height)
+            if (item.width == Screen.width && item.height == Screen.height)      //스크린 가로 세로 같을 때
 
-                resoultionDropdown.value = optionNum;
-            optionNum++;
+                resoultionDropdown.value = optionNum;      //
+                 optionNum++;
         }
 
         resoultionDropdown.RefreshShownValue();
@@ -69,7 +73,6 @@ public class MainScript : MonoBehaviour
 
     void Click()
     {
-
         SceneManager.LoadScene(0);
 
     }
@@ -81,8 +84,8 @@ public class MainScript : MonoBehaviour
         screenMode);
     }
 
-   
 
 
- }
+
+}
 

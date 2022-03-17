@@ -21,6 +21,8 @@ public class ActionController : MonoBehaviour
 
     GameObject book;
 
+    
+
     void Update()
     {
         //CheckItem();
