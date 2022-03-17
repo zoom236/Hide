@@ -1,0 +1,8 @@
+Item	RedBean	1	붉은 팥
+Item	ZipShoes	2	짚신
+Item	Amulet	3	부적
+Item	InvisibleGod	4	투명 갓
+Item	StickySlime	5	끈끈이
+Item	SmokeBomb	6	연막탄
+Item	BeanBomb	7	콩알탄
+Item	GasTrap	8	방구트랩

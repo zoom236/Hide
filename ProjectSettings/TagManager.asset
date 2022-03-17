@@ -7,6 +7,15 @@ TagManager:
   - FieldItem
   - Item
   - Floor
+  - RedBean
+  - Gat
+  - ZipShoes
+  - Amulet
+  - StickySlime
+  - SmokeBomb
+  - BeanBomb
+  - GasTrap
+  - Got
   layers:
   - Default
   - TransparentFX
