@@ -12,25 +12,20 @@ public class ActionController : MonoBehaviour
 
     public RaycastHit hitInfo;  // 충돌체 정보 저장
     public Inventory inven;
+    
 
     //[SerializeField]
     //private LayerMask layerMask;  // 특정 레이어를 가진 오브젝트에 대해서만 습득할 수 있어야 한다.
+
 
     [SerializeField]
     public Text actionText;  // 행동을 보여 줄 텍스트
 
     GameObject book;
 
-    
-
-    void Update()
-    {
-        //CheckItem();
+   
 
 
-        //TryAction();
-        //book = GameObject.FindGameObjectWithTag("Item");
-    }
 
     public void TryAction()
     {

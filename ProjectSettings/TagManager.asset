@@ -9,6 +9,7 @@ TagManager:
   - Floor
   - Ground
   - Dice
+  - item2
   layers:
   - Default
   - TransparentFX
