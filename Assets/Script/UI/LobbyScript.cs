@@ -13,7 +13,7 @@ public class LobbyScript : MonoBehaviour
         switch (this.gameObject.name)
         {
                 case "RoomMakeBtn":
-                SceneManager.LoadScene("GameRoom");
+                SceneManager.LoadScene("Test_1");
                 break;
 
                         case "StoreBtn":
