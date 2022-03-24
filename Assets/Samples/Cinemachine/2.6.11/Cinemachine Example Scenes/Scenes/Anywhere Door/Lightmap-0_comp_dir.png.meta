@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 7d302fa59d6cee64d8124c80cca6454a
+=======
+guid: f065859e098cc5a46bbf8ef7377c62bf
+>>>>>>> zoom_2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

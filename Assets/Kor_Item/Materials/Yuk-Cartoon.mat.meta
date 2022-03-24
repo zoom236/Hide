@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 542a96b356a2c544f94b996e9406bb76
+=======
+guid: dce279aa8c3170f4b8178a2242f1863d
+>>>>>>> zoom_2
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

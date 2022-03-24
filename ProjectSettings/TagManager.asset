@@ -10,6 +10,11 @@ TagManager:
   - Ground
   - Dice
   - item2
+  - RedBean
+  - Got
+  - SmokeBomb
+  - FxTemporaire
+  - Spawn
   layers:
   - Default
   - TransparentFX
