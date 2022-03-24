@@ -9,6 +9,8 @@ public class TPSCharacterController : MonoBehaviour
     [SerializeField]
     private Transform cameraArm;        // 카메라 회전
 
+    public GameObject Marker;
+
     Animator anim;
     Rigidbody rigid;
 
@@ -49,6 +51,12 @@ public class TPSCharacterController : MonoBehaviour
         Sit();          // 앉기
         Stand();        // 일어나기
         Throw();        // 던지기
+    }
+
+    private void FixedUpdate()
+    {
+        Marker.transform.position = new Vector3(this.transform.position.x, Marker.transform.position.y, this.transform.position.z);
+        Marker.transform.forward = this.transform.forward;
     }
 
     void GetInput()
