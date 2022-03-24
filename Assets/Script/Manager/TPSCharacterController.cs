@@ -21,8 +21,11 @@ public class TPSCharacterController : MonoBehaviour
     bool tDown;  // 일어나기
     bool isStand;
 
+
     //bool swDown;  // 앉은상태에서 걷기
     //bool isSitWalk;
+
+    //RedBeanSpawn redbeanspawn;      // 던지는 유무확인
 
     //private int ToggleView = 3; // 1=1인칭, 3=3인칭
 
@@ -32,6 +35,8 @@ public class TPSCharacterController : MonoBehaviour
         rigid = characterBody.GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        //redbeanspawn = GameObject.Find("Spawn").GetComponent<RedBeanSpawn>();
     }
 
     void Update()
@@ -43,6 +48,7 @@ public class TPSCharacterController : MonoBehaviour
         Jump();         // 점프
         Sit();          // 앉기
         Stand();        // 일어나기
+        Throw();        // 던지기
     }
 
     void GetInput()
@@ -68,8 +74,8 @@ public class TPSCharacterController : MonoBehaviour
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
-            characterBody.forward = moveDir;
-            //characterBody.forward = lookForward;
+            //characterBody.forward = moveDir;
+            characterBody.forward = lookForward;
             transform.position += moveDir * Time.deltaTime * 5f;
 
             //if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -133,8 +139,19 @@ public class TPSCharacterController : MonoBehaviour
         }
     }
 
+    void Throw()
+    {
+        if (GameObject.Find("Spawn").GetComponent<RedBeanSpawn>().RedBeanUse == true)
+        {
+            Debug.Log("던지기");
+            anim.SetTrigger("doThrow");
+        }
+        
+    }
+
     private void LookAround()       // 카메라 회전 기능
     {
+        //Debug.DrawRay(cameraArm.position, cameraArm.forward * 100f, Color.red);
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));       // mouse x = 마우스 좌우 수치, mouse y = 마우스 상하 수치 
         Vector3 camAngle = cameraArm.rotation.eulerAngles;
         float x = camAngle.x - mouseDelta.y;
