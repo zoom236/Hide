@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 {
-    Animator animator;
+    //Animator animator;
     Camera camera;
-    Rigidbody rigid;
+    //Rigidbody rigid;
 
     public float speed = 5f;
     public float runSpeed = 8f;
@@ -28,9 +28,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     void Awake()
     {
-        animator = this.GetComponent<Animator>();
+        //animator = this.GetComponent<Animator>();
         camera = Camera.main;
-        rigid = this.GetComponent<Rigidbody>();
+        //rigid = this.GetComponent<Rigidbody>();
 
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
@@ -89,10 +89,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             Vector3 right = transform.TransformDirection(Vector3.right);
             Vector3 moveDirection = forward * moveInput.y + right * moveInput.x;
 
-            transform.position += moveDirection * Time.deltaTime * 5f;
+            //transform.position += moveDirection * Time.deltaTime * 5f;
+
+            RB.AddForce(moveDirection * 3);
 
             float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
-            animator.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+            AN.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
         }
     }
 
