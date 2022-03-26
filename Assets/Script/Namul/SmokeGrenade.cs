@@ -12,6 +12,7 @@ public class SmokeGrenade : MonoBehaviourPunCallbacks
 
     // Update is called once per frame
 
+    public PhotonView PV;
     public Rigidbody rigid;
     public GameObject effectobj;
 
