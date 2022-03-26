@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LobbyUI.unity
     guid: 372e43ff2472ca940b61ab31700c0383
   - enabled: 1
-    path: Assets/Scenes/Test_1.unity
+    path: Assets/Scenes/Maeng/Test_1.unity
     guid: 9a8ec33523ebdf44ba356958c7b3fd11
   - enabled: 1
     path: Assets/Scenes/StoreScene.unity
