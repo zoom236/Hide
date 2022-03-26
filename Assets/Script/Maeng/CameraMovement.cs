@@ -29,8 +29,8 @@ public class CameraMovement : MonoBehaviour
         dirNormalized = realCamera.localPosition.normalized;
         finalDistance = realCamera.localPosition.magnitude;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -42,10 +42,23 @@ public class CameraMovement : MonoBehaviour
         rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
         Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
         transform.rotation = rot;
+
+        if(objectTofollow == null)
+        {
+            try
+            {
+                objectTofollow = GameObject.Find("FollowCam").transform;
+            }
+            catch
+            {
+                return;
+            }
+        }
     }
 
     void LateUpdate()
     {
+        if(objectTofollow != null)
         transform.position = Vector3.MoveTowards(transform.position, objectTofollow.position, followSpeed * Time.deltaTime);
 
         finalDir = transform.TransformPoint(dirNormalized * maxDistance);

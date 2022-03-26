@@ -73,7 +73,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Smoke()
     {
-        PhotonNetwork.Instantiate("SmokeGrenade", transform.position, Quaternion.identity);
+        //PhotonNetwork.Instantiate("SmokeGrenade", transform.position, Quaternion.identity);
     }
 
     void Move()
