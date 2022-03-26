@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     public PhotonView PV;
     public Text NickNameText;
     //public Image HealthImage;
+    Vector3 curPos;
 
     void Awake()
     {
@@ -78,28 +79,41 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     void Move()
     {
-        finalSpeed = (run) ? runSpeed : speed;
-
-        Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
-
-        if (isMove)
+        if (PV.IsMine)
         {
-            Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 right = transform.TransformDirection(Vector3.right);
-            Vector3 moveDirection = forward * moveInput.y + right * moveInput.x;
+            finalSpeed = (run) ? runSpeed : speed;
 
-            //transform.position += moveDirection * Time.deltaTime * 5f;
+            Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
 
-            RB.AddForce(moveDirection * 3);
+            if (isMove)
+            {
+                Vector3 forward = transform.TransformDirection(Vector3.forward);
+                Vector3 right = transform.TransformDirection(Vector3.right);
+                Vector3 moveDirection = forward * moveInput.y + right * moveInput.x;
 
-            float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
-            AN.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+                transform.position += moveDirection * Time.deltaTime * 5f;
+
+                //RB.AddForce(moveDirection * 3);
+
+                float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
+                AN.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+            }
         }
+        else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
+        else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new System.NotImplementedException();
+        if(stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+        }
+        else
+        {
+            curPos = (Vector3)stream.ReceiveNext();
+
+        }
     }
 }

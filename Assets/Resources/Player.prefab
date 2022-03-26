@@ -655,9 +655,9 @@ GameObject:
   - component: {fileID: 5373780225527289041}
   - component: {fileID: 5373780225527289042}
   - component: {fileID: 5373780225527289043}
+  - component: {fileID: 5373780225527289046}
   - component: {fileID: 5373780225527289044}
   - component: {fileID: 5373780225527289045}
-  - component: {fileID: 5373780225527289046}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -769,6 +769,22 @@ MonoBehaviour:
   AN: {fileID: 5373780225527289041}
   PV: {fileID: 5373780225527289044}
   NickNameText: {fileID: 980419569829740285}
+--- !u!114 &5373780225527289046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5373780225527289047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &5373780225527289044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,8 +805,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5373780225527289043}
-  - {fileID: 5373780225527289045}
   - {fileID: 5373780225527289046}
+  - {fileID: 5373780225527289045}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -815,22 +831,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
---- !u!114 &5373780225527289046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5373780225527289047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &5373780225591193837
 GameObject:
   m_ObjectHideFlags: 0
