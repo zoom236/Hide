@@ -317,6 +317,11 @@ MonoBehaviour:
   NickNameText: {fileID: 995902947094809192}
   BBADDA: {fileID: 2232067090774583369}
   ABox: {fileID: 1658885571}
+  Sky:
+  - {fileID: 2100000, guid: 24e37d9b5c3e0be4fab3e1defb323693, type: 2}
+  - {fileID: 2100000, guid: b94a90c9516c9cc42bf2d46a3d63a76a, type: 2}
+  Light: {fileID: 0}
+  Neon: {fileID: 0}
 --- !u!114 &5393780422729637955
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -49,6 +49,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         main.SetActive(false);
     }
 
+    IEnumerator DestroyBullet()
+    {
+        yield return new WaitForSeconds(0.2f);
+        foreach (GameObject GO in GameObject.FindGameObjectsWithTag("RedBean")) GO.GetComponent<PhotonView>().RPC("DestroyRPC", RpcTarget.All);
+    }
+
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P) && PhotonNetwork.IsConnected)

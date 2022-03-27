@@ -30,6 +30,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     bool isJump;
 
     public GameObject BBADDA, ABox;
+    public Material[] Sky;
+
+    public GameObject Light, Neon;
+
 
 
     void Awake()
@@ -40,6 +44,13 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
+
+
+
+        Light = GameObject.Find("Directional Light");
+        Neon = GameObject.Find("NeonOBJ");
+
+        Neon.SetActive(false);
     }
 
     void Update()
@@ -107,7 +118,77 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             //}
 
         }
+
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            PV.RPC("NightRPC", RpcTarget.All);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            PV.RPC("DayRPC", RpcTarget.All);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            PV.RPC("CountDownRPC", RpcTarget.All);
+        }
     }
+
+    [PunRPC]
+    void NightRPC()
+    {
+        //GameObject light = GameObject.Find("Player").gameObject;
+        //GameObject.Find("Directional Light").gameObject.SetActive(false);
+        //GameObject.Find("NeonOBJ").gameObject.SetActive(true);
+        //GameObject.Find("Camera").AddComponent<Skybox>().material = Sky[0];
+
+        //Light.SetActive(false);
+        //Neon.SetActive(true);
+        //RenderSettings.skybox = Sky[0];
+        StartCoroutine(NN());
+    }
+    [PunRPC]
+    IEnumerator NN()
+    {
+        SoundManager.instance.Play();
+        yield return new WaitForSeconds(3);
+        GameObject.Find("countdownumber").GetComponent<CountDownn>().CountStart();
+        //CountDownn.instance.CountStart();
+        yield return new WaitForSeconds(12);
+        Light.SetActive(false);
+        Neon.SetActive(true);
+        RenderSettings.skybox = Sky[0];
+        SoundManager.instance.Play();
+    }
+
+
+    [PunRPC]
+    void DayRPC()
+    {
+        //GameObject light = GameObject.Find("Player").gameObject;
+        //GameObject.Find("Directional Light").gameObject.SetActive(true);
+        //GameObject.Find("NeonOBJ").gameObject.SetActive(false);
+        //GameObject.Find("Camera").AddComponent<Skybox>().material = Sky[1];
+
+        //Light.SetActive(true);
+        //Neon.SetActive(false);
+        //RenderSettings.skybox = Sky[1];
+        StartCoroutine(DD());
+    }
+    [PunRPC]
+    IEnumerator DD()
+    {
+        SoundManager.instance.Play();
+        yield return new WaitForSeconds(3);
+        GameObject.Find("countdownumber").GetComponent<CountDownn>().CountStart();
+        //CountDownn.instance.CountStart();
+        yield return new WaitForSeconds(12);
+        Light.SetActive(true);
+        Neon.SetActive(false);
+        RenderSettings.skybox = Sky[1];
+        SoundManager.instance.Play();
+    }
+
     [PunRPC]
     void BBADDARPC()
     {
@@ -127,6 +208,21 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.4f);
         if (!NetworkManager.instance.doke)
             BBADDA.SetActive(false);
+    }
+    [PunRPC]
+    void CountDownRPC()
+    {
+        StartCoroutine(Count());
+    }
+    [PunRPC]
+    IEnumerator Count()
+    {
+        SoundManager.instance.Play();
+        yield return new WaitForSeconds(3);
+        GameObject.Find("countdownumber").GetComponent<CountDownn>().CountStart();
+        //CountDownn.instance.CountStart();
+        yield return new WaitForSeconds(12);
+        SoundManager.instance.Play();
     }
 
     void LateUpdate()
