@@ -7,17 +7,31 @@ using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public static NetworkManager instance;
     public InputField NicnNameInput;
     public GameObject DisconnectPanel;
     public GameObject RespawnPanel;
     public Transform SpawnPos;
     public GameObject main;
+    public bool doke;
 
     private void Awake()
     {
-        Screen.SetResolution(960, 540, false);
+        instance = this;
+        Screen.SetResolution(1920, 1080, false);
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
+    }
+
+    public void children()
+    {
+        Connect();
+    }
+
+    public void dokebi()
+    {
+        doke = true;
+        Connect();
     }
 
     public void Connect() => PhotonNetwork.ConnectUsingSettings();
@@ -43,9 +57,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void Spawn()
     {
-        PhotonNetwork.Instantiate("Player", SpawnPos.position , Quaternion.identity);
-        RespawnPanel.SetActive(false);
         main.SetActive(false);
+        if (!doke)
+        {
+            PhotonNetwork.Instantiate("Player", SpawnPos.position, Quaternion.identity);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            PhotonNetwork.Instantiate("Enemy", SpawnPos.position, Quaternion.identity);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        RespawnPanel.SetActive(false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
