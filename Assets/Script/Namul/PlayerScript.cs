@@ -27,6 +27,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     //public Image HealthImage;
     Vector3 curPos;
 
+    bool isJump;
+
     void Awake()
     {
         //animator = this.GetComponent<Animator>();
@@ -61,12 +63,22 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         {
             Smoke();
         }
+        if(Input.GetKeyDown(KeyCode.Space)&&PV.IsMine&& !isJump)
+        {
+            PV.RPC("JumpRPC", RpcTarget.All);
+            isJump = true;
+        }
     }
-
+    [PunRPC]
+    void JumpRPC()
+    {
+        //RB.velocity = Vector3.zero;
+        RB.AddForce(Vector3.up * 400);
+    }
 
     void LateUpdate()
     {
-        if (toggleCameraRotation != true)
+        if (toggleCameraRotation != true&&PV.IsMine)
         {
             Vector3 playerRotate = Vector3.Scale(camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
@@ -102,6 +114,15 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
+    }
+
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            isJump = false;
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
