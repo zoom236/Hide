@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RedBeanItem : MonoBehaviour
 {
-    
     public bool isUse;
 
     // Start is called before the first frame update
@@ -16,18 +15,23 @@ public class RedBeanItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.inputString == (transform.parent.GetComponent<SlotCheck>().num + 1).ToString())
         {
             isUse = true;
 
             // 아이템 사용
             Debug.Log("RedBean, slotNumber : " + (transform.parent.GetComponent<SlotCheck>().num + 1));
-            Destroy(this.gameObject);
+            StartCoroutine(ItemUse());
         }
 
         else
             isUse = false;
+    }
+
+    IEnumerator ItemUse()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(this.gameObject);
     }
 
 }

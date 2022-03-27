@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5526690580588957705}
   m_Layer: 0
   m_Name: RedBeanItem_New 1
-  m_TagString: Untagged
+  m_TagString: RedBean
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

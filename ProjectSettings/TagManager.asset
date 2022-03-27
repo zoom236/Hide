@@ -25,9 +25,9 @@ TagManager:
   - Item
   - Player
   - 
-  - floor
-  - 
-  - 
+  - Floor
+  - Enemy
+  - EnemyDead
   - 
   - 
   - 

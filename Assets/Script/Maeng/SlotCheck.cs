@@ -8,7 +8,7 @@ public class SlotCheck : MonoBehaviour
     public int num;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         inventory = GameObject.Find("Player").GetComponent<InventoryNew>();
         num = int.Parse(gameObject.name.Substring(gameObject.name.IndexOf("_") + 1));    

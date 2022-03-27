@@ -24,25 +24,22 @@ public class PickUp : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        
         if (collision.collider.CompareTag("Player"))
         {
             pickUpText.gameObject.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.E))
+            InventoryNew inven = collision.collider.GetComponent<InventoryNew>();
+            for (int i = 0; i < inven.slots.Count; i++)
             {
-                InventoryNew inven = collision.collider.GetComponent<InventoryNew>();
-                for (int i = 0; i < inven.slots.Count; i++)
+                if (inven.slots[i].isEmpty)
                 {
-                    if (inven.slots[i].isEmpty)
-                    {
-                        Instantiate(slotItem, inven.slots[i].slotObj.transform, false);
-                        inven.slots[i].isEmpty = false;
-                        Destroy(this.gameObject);
-                        break;
-                    }
+                    Instantiate(slotItem, inven.slots[i].slotObj.transform, false);
+                    inven.slots[i].isEmpty = false;
+                    Destroy(this.gameObject);
+                    break;
                 }
-                Destroy(this.gameObject);
-            }    
+            }
+            Destroy(this.gameObject);
         }
     }
 
