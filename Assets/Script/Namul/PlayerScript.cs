@@ -132,7 +132,34 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         {
             PV.RPC("CountDownRPC", RpcTarget.All);
         }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            PV.RPC("NRPC", RpcTarget.All);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            PV.RPC("DRPC", RpcTarget.All);
+        }
     }
+
+    [PunRPC]
+    void NRPC()
+    {
+        Light.SetActive(false);
+        Neon.SetActive(true);
+        RenderSettings.skybox = Sky[0];
+        //SoundManager.instance.Play();
+    }
+    [PunRPC]
+    void DRPC()
+    {
+        Light.SetActive(true);
+        Neon.SetActive(false);
+        RenderSettings.skybox = Sky[1];
+        //SoundManager.instance.Play();
+    }
+
+
 
     [PunRPC]
     void NightRPC()
