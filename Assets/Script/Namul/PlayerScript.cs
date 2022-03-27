@@ -74,6 +74,16 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         {
             tDown = Input.GetKeyDown(KeyCode.LeftControl);
         }
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Smoke();
+        }
+    }
+
+    void Smoke()
+    {
+        PhotonNetwork.Instantiate("SmokeGrenade", transform.position, Quaternion.identity);
     }
 
     private void Move()
