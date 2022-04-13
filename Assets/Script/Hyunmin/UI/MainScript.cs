@@ -16,7 +16,6 @@ public class MainScript : MonoBehaviour
     int resolutionNum;
 
   
-
     public void Start()
     {
         InitUI();
@@ -25,41 +24,52 @@ public class MainScript : MonoBehaviour
     void InitUI()
     {
 
-        for (int i = 0; i < Screen.resolutions.Length; i++)
-        {
 
-            if (Screen.resolutions[i].refreshRate == 60)
-                resolutions.Add(Screen.resolutions[i]);
+        int setWidth = 1920;
+        int setHeight = 1080;
+
+        Screen.SetResolution(setWidth, setHeight, true);
+
+        //        Resolution.[i] = Screen.SetResolution(1920, 1080, true);
+
+
+        //        for (int i = 0; i < screen.resolutions.length; i++)
+        //        {
+
+        //            if (screen.resolutions[i].refreshrate == 60)
+        //                resolutions.add(screen.resolutions[i]);
+
+        //        }
+
+
+        //        resoultionDropdown.options.Clear();  // 옵션 리스트 클리어
+
+        //            int optionNum = 0;
+
+        //        foreach (Resolution item in resolutions)
+        //        {
+        //            Dropdown.OptionData option = new Dropdown.OptionData();
+        //            option.text = item.width + " x " + item.height;      //옵션 해상도 출력
+        //            resoultionDropdown.options.Add(option);    //옵션 추가
+
+
+        //            if (item.width == Screen.width && item.height == Screen.height)      //스크린 가로 세로 같을 때
+
+        //                resoultionDropdown.value = optionNum;     //
+        //            optionNum++;
+        //        }
+
+        //        resoultionDropdown.RefreshShownValue();
+
+        //        fullscreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
+
+        //    }
+
 
         }
 
-        resolutions.AddRange(Screen.resolutions);
 
-        resoultionDropdown.options.Clear();
-
-        int optionNum = 0;
-
-        foreach (Resolution item in resolutions)
-        {
-            Dropdown.OptionData option = new Dropdown.OptionData();
-            option.text = item.width + " x " + item.height;      //옵션 해상도 출력
-            resoultionDropdown.options.Add(option);    //옵션 추가
-
-
-            if (item.width == Screen.width && item.height == Screen.height)      //스크린 가로 세로 같을 때
-
-                resoultionDropdown.value = optionNum;      //
-                 optionNum++;
-        }
-
-        resoultionDropdown.RefreshShownValue();
-
-        fullscreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
-
-    }
-
-
-    public void DropboxOptionChange(int x)
+public void DropboxOptionChange(int x)
     {
         resolutionNum = x;
     }
