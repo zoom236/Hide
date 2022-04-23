@@ -12,7 +12,6 @@ public class BulletScript : MonoBehaviourPunCallbacks
     {
         Destroy(gameObject, 3.5f);
     }
-
     //void Update() => transform.Translate(Vector3.forward * 7 * Time.deltaTime * dir);
 
     void Go()
@@ -21,8 +20,6 @@ public class BulletScript : MonoBehaviourPunCallbacks
         Rigidbody rigidBean = instantRedBean.GetComponent<Rigidbody>();
         rigidBean.AddForce(nextVec, ForceMode.Impulse);
     }
-
-
 
     [PunRPC]
     void DirRPC(Vector3 nextVec)

@@ -286,6 +286,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
                 float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
                 AN.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+
             }
         }
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
