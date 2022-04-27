@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartScene.unity
+    path: Assets/Scenes/Hyunmin/StartScene.unity
     guid: 254e5d8de6e19ac42bea49dcf0ed99d5
   - enabled: 1
-    path: Assets/Scenes/LobbyUI.unity
+    path: Assets/Scenes/Hyunmin/LobbyUI.unity
     guid: 372e43ff2472ca940b61ab31700c0383
   - enabled: 1
     path: Assets/Scenes/Maeng/Test_1.unity
