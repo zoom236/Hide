@@ -32,7 +32,9 @@ public class RedBeanSpawn : MonoBehaviour
         {
             Ray ray = followCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayhit;
-            if (Physics.Raycast(ray, out rayhit, 100))
+            int floorMask = LayerMask.GetMask("Floor");
+
+            if (Physics.Raycast(ray, out rayhit, 100, floorMask))
             {
                 Vector3 nextVec = rayhit.point - player.transform.position;
                 nextVec.y = 6;
@@ -40,6 +42,8 @@ public class RedBeanSpawn : MonoBehaviour
                 GameObject instantRedBean = Instantiate(RedBeanObj, transform.position, transform.rotation);
                 Rigidbody rigidBean = instantRedBean.GetComponent<Rigidbody>();
                 rigidBean.AddForce(nextVec, ForceMode.Impulse);
+
+
 
                 RedBeanUse = true;
                 Debug.Log(RedBeanUse);

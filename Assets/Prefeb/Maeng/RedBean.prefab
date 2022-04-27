@@ -88,4 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76632805d51b4645901b19125bd91c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RedBeanObj: {fileID: 4069052004464741622, guid: 8b96434c3f56b56438c93d4eb21fb135, type: 3}
+  RedBeanObj: {fileID: 6877159817588012650, guid: 848e0e2800b5b18448098c529fa38fdd, type: 3}
+  Spawn: {fileID: 1993728658815072003, guid: adb4e1c3b58b1fb488efa8ebff743d29, type: 3}
+  followCamera: {fileID: 4049923216270981117, guid: 84c193fa3fc519a42a2add579893ba3d, type: 3}
+  player: {fileID: 5550752972114732464, guid: 25f16d4c581879e4b836ef9279bce9ff, type: 3}

@@ -50,7 +50,7 @@ public class TPSCharacterController : MonoBehaviour
         Jump();         // 점프
         Sit();          // 앉기
         Stand();        // 일어나기
-        Throw();        // 던지기
+        //Throw();        // 던지기
     }
 
     private void FixedUpdate()
@@ -147,15 +147,15 @@ public class TPSCharacterController : MonoBehaviour
         }
     }
 
-    void Throw()
-    {
-        if (GameObject.Find("Spawn").GetComponent<RedBeanSpawn>().RedBeanUse == true)
-        {
-            Debug.Log("던지기");
-            anim.SetTrigger("doThrow");
-        }
+    //void Throw()
+    //{
+    //    if (GameObject.Find("Spawn").GetComponent<RedBeanSpawn>().RedBeanUse == true)
+    //    {
+    //        Debug.Log("던지기");
+    //        anim.SetTrigger("doThrow");
+    //    }
         
-    }
+    //}
 
     private void LookAround()       // 카메라 회전 기능
     {
