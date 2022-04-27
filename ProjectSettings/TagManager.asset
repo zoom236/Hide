@@ -15,6 +15,7 @@ TagManager:
   - SmokeBomb
   - FxTemporaire
   - Spawn
+  - BBADDA
   layers:
   - Default
   - TransparentFX
@@ -24,11 +25,11 @@ TagManager:
   - UI
   - Item
   - Player
-  - 
+  - Bean
   - floor
-  - 
-  - 
-  - 
+  - BBADDA
+  - asdfasdf
+  - ddd
   - 
   - 
   - 

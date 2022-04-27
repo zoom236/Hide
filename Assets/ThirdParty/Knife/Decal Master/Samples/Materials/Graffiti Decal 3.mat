@@ -71,6 +71,7 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NoExclusionMask: 0
     - _NormalBlendOrClip: 0
     - _NormalEdgeBlending: 0
     - _NormalScale: 1
@@ -92,3 +93,4 @@ Material:
     - _InstancedColor: {r: 1, g: 1, b: 1, a: 1}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
     - _UV: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

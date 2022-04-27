@@ -7,22 +7,17 @@ using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField]
-    private Transform characterBody;    // 캐릭터
-    [SerializeField]
-    private Transform cameraArm;        // 카메라 회전
+    //Animator animator;
+    Camera camera;
+    //Rigidbody rigid;
 
-    Animator anim;
-    Rigidbody rigid;
+    public float speed = 5f;
+    public float runSpeed = 8f;
+    public float finalSpeed;
+    public bool toggleCameraRotation;
+    public bool run;
 
-    bool jDown;  // 점프
-    bool isJump;
-
-    bool sDown;  // 앉기
-    bool isSit;
-
-    bool tDown;  // 일어나기
-    bool isStand;
+    public float smoothness = 10f;
 
     public Rigidbody RB;
     public Animator AN;
@@ -30,181 +25,313 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     public PhotonView PV;
     public Text NickNameText;
     //public Image HealthImage;
-
     Vector3 curPos;
 
-    //bool swDown;  // 앉은상태에서 걷기
-    //bool isSitWalk;
+    bool isJump;
 
-    //RedBeanSpawn redbeanspawn;      // 던지는 유무확인
+    public GameObject BBADDA, ABox;
+    public Material[] Sky;
 
-    //private int ToggleView = 3; // 1=1인칭, 3=3인칭
+    public GameObject Light, Neon;
+
+
 
     void Awake()
     {
-        anim = characterBody.GetComponent<Animator>();        // characterBody.GetComponent
-        rigid = characterBody.GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        //redbeanspawn = GameObject.Find("Spawn").GetComponent<RedBeanSpawn>();
+        //animator = this.GetComponent<Animator>();
+        camera = Camera.main;
+        //rigid = this.GetComponent<Rigidbody>();
 
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
+
+
+
+        Light = GameObject.Find("Directional Light");
+        Neon = GameObject.Find("NeonOBJ");
+
+        Neon.SetActive(false);
     }
 
     void Update()
     {
-        GetInput();     // 키 입력
-        Move();         // 플레이어 이동
-        LookAround();   // 카메라 시선 이동
-        SitMove();      // 앉아서 이동
-        Jump();         // 점프
-        Sit();          // 앉기
-        Stand();        // 일어나기
-        Throw();        // 던지기
+        if (PV.IsMine)
+        {
+            if (Input.GetKey(KeyCode.LeftAlt))
+            {
+                toggleCameraRotation = true;        // 둘러보기 활성화
+            }
+            else
+            {
+                toggleCameraRotation = false;       // 둘러보기 비활성화
+            }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                run = true;
+            }
+            else
+            {
+                run = false;
+            }
+            Move();
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Smoke();
+            }
+            if (Input.GetKeyDown(KeyCode.Space) && PV.IsMine && !isJump)
+            {
+                PV.RPC("JumpRPC", RpcTarget.All);
+                isJump = true;
+            }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                PV.RPC("BBADDARPC", RpcTarget.All);
+
+            }
+
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayhit;
+            int floorMask = LayerMask.GetMask("Floor");
+            if (Physics.Raycast(ray, out rayhit, 100))
+            {
+                Debug.DrawRay(transform.position, transform.forward * 100f, Color.red);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+
+                    Vector3 nextVec = rayhit.point - transform.position;
+                    nextVec.y = 6;
+
+                    PhotonNetwork.Instantiate("RedBean", transform.position, Quaternion.identity)
+                        .GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, nextVec);
+                }
+            }
+            //Debug.Log("콩");
+            //if (Physics.Raycast(ray, out rayhit, 100, floorMask))
+            //{
+            //    Vector3 nextVec = rayhit.point - transform.position;
+            //    nextVec.y = 6;
+
+            //    GameObject instantRedBean = PhotonNetwork.Instantiate("RedBean", transform.position, transform.rotation);
+            //    Rigidbody rigidBean = instantRedBean.GetComponent<Rigidbody>();
+            //    rigidBean.AddForce(nextVec, ForceMode.Impulse);
+            //}
+
+        }
+
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            PV.RPC("NightRPC", RpcTarget.All);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            PV.RPC("DayRPC", RpcTarget.All);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            PV.RPC("CountDownRPC", RpcTarget.All);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            PV.RPC("NRPC", RpcTarget.All);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            PV.RPC("DRPC", RpcTarget.All);
+        }
     }
 
-    void GetInput()
+    [PunRPC]
+    void NRPC()
     {
-        jDown = Input.GetButtonDown("Jump");
-        sDown = Input.GetKeyDown(KeyCode.LeftControl);
-
-        if (sDown && isSit)
-        {
-            tDown = Input.GetKeyDown(KeyCode.LeftControl);
-        }
-
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            Smoke();
-        }
+        Light.SetActive(false);
+        Neon.SetActive(true);
+        RenderSettings.skybox = Sky[0];
+        //SoundManager.instance.Play();
+    }
+    [PunRPC]
+    void DRPC()
+    {
+        Light.SetActive(true);
+        Neon.SetActive(false);
+        RenderSettings.skybox = Sky[1];
+        //SoundManager.instance.Play();
     }
 
+
+
+    [PunRPC]
+    void NightRPC()
+    {
+        //GameObject light = GameObject.Find("Player").gameObject;
+        //GameObject.Find("Directional Light").gameObject.SetActive(false);
+        //GameObject.Find("NeonOBJ").gameObject.SetActive(true);
+        //GameObject.Find("Camera").AddComponent<Skybox>().material = Sky[0];
+
+        //Light.SetActive(false);
+        //Neon.SetActive(true);
+        //RenderSettings.skybox = Sky[0];
+        StartCoroutine(NN());
+    }
+    [PunRPC]
+    IEnumerator NN()
+    {
+        SoundManager.instance.Play();
+        yield return new WaitForSeconds(3);
+        GameObject.Find("countdownumber").GetComponent<CountDownn>().CountStart();
+        //CountDownn.instance.CountStart();
+        yield return new WaitForSeconds(12);
+        Light.SetActive(false);
+        Neon.SetActive(true);
+        RenderSettings.skybox = Sky[0];
+        SoundManager.instance.Play();
+    }
+
+
+    [PunRPC]
+    void DayRPC()
+    {
+        //GameObject light = GameObject.Find("Player").gameObject;
+        //GameObject.Find("Directional Light").gameObject.SetActive(true);
+        //GameObject.Find("NeonOBJ").gameObject.SetActive(false);
+        //GameObject.Find("Camera").AddComponent<Skybox>().material = Sky[1];
+
+        //Light.SetActive(true);
+        //Neon.SetActive(false);
+        //RenderSettings.skybox = Sky[1];
+        StartCoroutine(DD());
+    }
+    [PunRPC]
+    IEnumerator DD()
+    {
+        SoundManager.instance.Play();
+        yield return new WaitForSeconds(3);
+        GameObject.Find("countdownumber").GetComponent<CountDownn>().CountStart();
+        //CountDownn.instance.CountStart();
+        yield return new WaitForSeconds(12);
+        Light.SetActive(true);
+        Neon.SetActive(false);
+        RenderSettings.skybox = Sky[1];
+        SoundManager.instance.Play();
+    }
+
+    [PunRPC]
+    void BBADDARPC()
+    {
+        AN.SetTrigger("BBADDA");
+
+        StartCoroutine(ATK());
+        //PV.RPC("ATK", RpcTarget.All);
+    }
+    [PunRPC]
+    IEnumerator ATK()
+    {
+        BBADDA.SetActive(true);
+        yield return new WaitForSeconds(1.3f);
+        ABox.SetActive(true);
+        yield return new WaitForSeconds(0.42f);
+        ABox.SetActive(false);
+        yield return new WaitForSeconds(0.4f);
+        if (!NetworkManager.instance.doke)
+            BBADDA.SetActive(false);
+    }
+    [PunRPC]
+    void CountDownRPC()
+    {
+        StartCoroutine(Count());
+    }
+    [PunRPC]
+    IEnumerator Count()
+    {
+        SoundManager.instance.Play();
+        yield return new WaitForSeconds(3);
+        GameObject.Find("countdownumber").GetComponent<CountDownn>().CountStart();
+        //CountDownn.instance.CountStart();
+        yield return new WaitForSeconds(12);
+        SoundManager.instance.Play();
+    }
+
+    void LateUpdate()
+    {
+        if (toggleCameraRotation != true && PV.IsMine)
+        {
+            Vector3 playerRotate = Vector3.Scale(camera.transform.forward, new Vector3(1, 0, 1));
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);
+        }
+    }
     void Smoke()
     {
-        PhotonNetwork.Instantiate("SmokeGrenade", transform.position, Quaternion.identity);
+        //PhotonNetwork.Instantiate("SmokeGrenade", transform.position, Quaternion.identity);
     }
 
-    private void Move()
+    void Move()
     {
-        Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
-        anim.SetBool("isRun", isMove);
-
-        if (isMove)
+        if (PV.IsMine)
         {
-            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-            Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
+            finalSpeed = (run) ? runSpeed : speed;
 
-            //characterBody.forward = moveDir;
-            characterBody.forward = lookForward;
-            transform.position += moveDir * Time.deltaTime * 5f;
+            Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
 
-            //if (Input.GetKeyDown(KeyCode.LeftAlt))
-            //{
-            //    characterBody.forward = lookForward;
-            //}
-            //else
-            //{
-            //    characterBody.forward = moveDir;
-            //}
+            if (isMove)
+            {
+                Vector3 forward = transform.TransformDirection(Vector3.forward);
+                Vector3 right = transform.TransformDirection(Vector3.right);
+                Vector3 moveDirection = forward * moveInput.y + right * moveInput.x;
+
+                transform.position += moveDirection * Time.deltaTime * 5f;
+
+                //RB.AddForce(moveDirection * 3);
+
+                float percent = ((run) ? 1 : 0.5f) * moveDirection.magnitude;
+                AN.SetFloat("Blend", percent, 0.1f, Time.deltaTime);
+
+            }
         }
-
-
-        //Debug.DrawRay(cameraArm.position, new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized, Color.red);
+        else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
+        else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
-    void Sit()
+
+    [PunRPC]
+    void JumpRPC()
     {
-        if (sDown && !isSit)
-        {
-            anim.SetBool("isSit", true);
-            isSit = true;
-        }
-        //isSit = false;
+        //RB.velocity = Vector3.zero;
+        RB.AddForce(Vector3.up * 400);
     }
 
-    void SitMove()
-    {
-        Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        bool isMove = moveInput.magnitude != 0;   // moveInput이 0이면 이동입력이 없는것
-        anim.SetBool("isSitWalk", isMove);
-
-        if (isMove)
-        {
-            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-            Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
-
-            characterBody.forward = moveDir;
-            //characterBody.forward = lookForward;
-            transform.position += moveDir * Time.deltaTime * 0.5f;
-        }
-    }
-
-    void Stand()
-    {
-        if (tDown && isSit && !isStand)
-        {
-            anim.SetBool("isStand", true);
-            isStand = true;
-        }
-    }
-
-    void Jump()
-    {
-        if (jDown && !isJump)
-        {
-            rigid.AddForce(Vector3.up * 5, ForceMode.Impulse);
-            //anim.SetBool("isJump", true);
-            anim.SetTrigger("doJump");
-            isJump = true;
-        }
-    }
-
-    void Throw()
-    {
-        if (GameObject.Find("Spawn").GetComponent<RedBeanSpawn>().RedBeanUse == true)
-        {
-            Debug.Log("던지기");
-            anim.SetTrigger("doThrow");
-        }
-        
-    }
-
-    private void LookAround()       // 카메라 회전 기능
-    {
-        //Debug.DrawRay(cameraArm.position, cameraArm.forward * 100f, Color.red);
-        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));       // mouse x = 마우스 좌우 수치, mouse y = 마우스 상하 수치 
-        Vector3 camAngle = cameraArm.rotation.eulerAngles;
-        float x = camAngle.x - mouseDelta.y;
-
-        if(x < 180f)
-        {
-            x = Mathf.Clamp(x, -1f, 70f);
-        }
-        else
-        {
-            x = Mathf.Clamp(x, 335f, 361f);
-        }
-
-        cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
-    }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor")
         {
-            Debug.Log("착지");
-            //anim.SetBool("isJump", false);
             isJump = false;
-            isSit = false;
-            isStand = false;
+        }
+        //if(collision.gameObject.tag == "BBADDA")
+        //{
+        //    AN.SetTrigger("Hit");
+        //    Debug.Log("Hit");
+        //}
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "BBADDA")
+        {
+            AN.SetTrigger("Hit");
+            Debug.Log("Hit");
         }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        throw new System.NotImplementedException();
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+        }
+        else
+        {
+            curPos = (Vector3)stream.ReceiveNext();
+
+        }
     }
 }
